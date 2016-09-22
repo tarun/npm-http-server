@@ -41,7 +41,9 @@ export const sendHTML = (res, html, maxAge = 0, statusCode = 200) => {
   res.end(html)
 }
 
-export const sendRedirect = (res, location, maxAge = 0, statusCode = 302) => {
+export const sendRedirect = (res, relativeLocation, maxAge = 0, statusCode = 302) => {
+  const location = res.req && res.req.baseUrl ? res.req.baseUrl + relativeLocation : relativeLocation
+
   const html = `<p>You are being redirected to <a href="${location}">${location}</a>`
 
   res.writeHead(statusCode, {
